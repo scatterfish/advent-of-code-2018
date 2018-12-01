@@ -82,7 +82,8 @@ def populatetemplates():
 	))
 	p.chmod(p.stat().st_mode | stat.S_IEXEC)
 	path("templates/python").mkdir()
-	path("templates/python/main.py").write_text((
+	p = path("templates/python/main.py")
+	p.write_text((
 		"#!/bin/python\n"
 		"\n"
 		"def main():\n"
@@ -91,6 +92,7 @@ def populatetemplates():
 		"if __name__ == \"__main__\":\n"
 		"	main()\n"
 	))
+	p.chmod(p.stat().st_mode | stat.S_IEXEC)
 	path("templates/rust").mkdir()
 	path("templates/rust/src").mkdir()
 	path("templates/rust/Cargo.toml").write_text((
