@@ -20,8 +20,6 @@ fn main() {
 		frequency_deltas.push(delta);
 	}
 	
-	println!("Calculating... Be patient, this may take a while...");
-	
 	let mut frequency_sum = 0;
 	let mut first_repeat = 0;
 	let mut known_frequencies: HashSet<i32> = HashSet::new();
