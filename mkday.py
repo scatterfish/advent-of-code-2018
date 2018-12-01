@@ -64,6 +64,7 @@ def populatetemplates():
 	))
 	path("templates/c").mkdir()
 	path("templates/c/out").mkdir()
+	path("templates/c/input.txt").write_text("")
 	path("templates/c/main.c").write_text((
 		"#include <stdio.h>\n"
 		"#include <stdlib.h>\n"
@@ -82,6 +83,7 @@ def populatetemplates():
 	))
 	p.chmod(p.stat().st_mode | stat.S_IEXEC)
 	path("templates/python").mkdir()
+	path("templates/python/input.txt").write_text("")
 	p = path("templates/python/main.py")
 	p.write_text((
 		"#!/bin/python\n"
@@ -95,6 +97,7 @@ def populatetemplates():
 	p.chmod(p.stat().st_mode | stat.S_IEXEC)
 	path("templates/rust").mkdir()
 	path("templates/rust/src").mkdir()
+	path("templates/rust/src/input.txt").write_text("")
 	path("templates/rust/Cargo.toml").write_text((
 		"[package]\n"
 		"name = \"rust\"\n"
@@ -211,8 +214,6 @@ def main():
 		except:
 			exitwitherror("Failed to create directory \"%s\"" % puzzlename)
 		print("Done! Created directory \"%s\"" % puzzlename)
-	
-	
 
 if __name__ == "__main__":
 	try:
