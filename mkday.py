@@ -6,6 +6,7 @@
 
 import os
 import sys
+import stat
 import re
 import shutil
 from pathlib import Path as path
@@ -58,9 +59,28 @@ def populatetemplates():
 	path("templates/howto.txt").write_text((
 		"This is the directory containing project templates for various languages.\n"
 		"Each template is a directory, and in that directory are all of the files and folders for the template that will be copied when making a new project.\n"
-		"A template for Python is included. Feel free to use it as an example and/or modify it!\n"
+		"Templates for C, Python, and Rust are included. Feel free to use them as exmaples and/or modify them!\n"
 		"The only reserved template name is \"blank\". A custom template named \"blank\" will simply be ignored.\n"
 	))
+	path("templates/c").mkdir()
+	path("templates/c/out").mkdir()
+	path("templates/c/main.c").write_text((
+		"#include <stdio.h>\n"
+		"#include <stdlib.h>\n"
+		"\n"
+		"int main() {\n"
+		"	printf(\"Hello, world!\\n\");\n"
+		"	return 0;\n"
+		"}\n"
+	))
+	p = path("templates/c/build.sh")
+	p.write_text((
+		"#!/bin/sh\n"
+		"\n"
+		"gcc main.c -o out/main\n"
+		"exec out/main\n"
+	))
+	p.chmod(p.stat().st_mode | stat.S_IEXEC)
 	path("templates/python").mkdir()
 	path("templates/python/main.py").write_text((
 		"#!/bin/python\n"
@@ -71,19 +91,33 @@ def populatetemplates():
 		"if __name__ == \"__main__\":\n"
 		"	main()\n"
 	))
+	path("templates/rust").mkdir()
+	path("templates/rust/src").mkdir()
+	path("templates/rust/Cargo.toml").write_text((
+		"[package]\n"
+		"name = \"rust\"\n"
+		"version = \"0.1.0\"\n"
+		"authors = [\"\"]\n"
+		"\n"
+		"[dependencies]\n"
+	))
+	path("templates/rust/src/main.rs").write_text((
+		"fn main() {\n"
+		"	println!(\"Hello, world!\");\n"
+		"}\n"
+	))
 	sys.exit(0)
 
 def main():
 	
 	# ensure that all of the directories exist
-	checkdir("src")
-	checkdir("out")
+	checkdir("puzzles")
 	if checkdir("templates"):
 		populatetemplates()
 	
 	# get the paths for the templates and existing puzzle projects
-	templates = [t for t in path("templates").glob("**/*") if t.is_dir()]
-	puzzles = [e for e in path("src").glob("**/*") if e.is_dir()]
+	templates = [t for t in path("templates").glob("*") if t.is_dir()]
+	puzzles = [e for e in path("puzzles").glob("*") if e.is_dir()]
 	
 	# get the day numbers for the existing puzzle projects
 	days = []
@@ -160,10 +194,10 @@ def main():
 		else:
 			print("Please enter a valid template name.")
 	
-	dst = path("src/%s" % puzzlename)
+	dst = path("puzzles/%s" % puzzlename)
 	if not template == "blank":
 		src = path("templates/%s" % template)
-		dst = path("src/%s" % puzzlename)
+		dst = path("puzzles/%s" % puzzlename)
 		try:
 			shutil.copytree(src, dst)
 		except:
