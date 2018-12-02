@@ -29,7 +29,7 @@ fn main() {
 	while !found_repeat {
 		for i in &frequency_deltas {
 			frequency_sum += i;
-			if known_frequencies.contains(&frequency_sum) && !found_repeat {
+			if known_frequencies.contains(&frequency_sum) {
 				first_repeat = frequency_sum;
 				found_repeat = true;
 				break;

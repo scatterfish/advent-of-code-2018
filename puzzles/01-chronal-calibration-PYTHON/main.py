@@ -27,7 +27,7 @@ def main():
 	while not found_repeat:
 		for i in frequency_deltas:
 			frequency_sum += i
-			if frequency_sum in known_frequencies and not found_repeat:
+			if frequency_sum in known_frequencies:
 				first_repeat = frequency_sum
 				found_repeat = True
 				break
