@@ -148,8 +148,6 @@ def main():
 		"---------------------------------------------------"
 	))
 	
-	# TODO: CHECK FOR FINAL DAY
-	
 	# get the day of the puzzle
 	daycorrect = getyesno("It seems that it's day %d. Is this correct?" % day)
 	if not daycorrect:
@@ -168,36 +166,38 @@ def main():
 	else:
 		daystr = str(day)
 	
+	template = ""
+	
+	
 	# get puzzle name and format it
 	puzzlename = ""
+	template = ""
 	while True:
 		print("Please enter the puzzle name. (e.g. Inverse Captcha)")
 		puzzlename = input(">>>").lower()
 		puzzlename = re.sub(r"[\/\\\?\%\*\:\|\"\<\>\.\,\!\@\#\$\^\&\;\-\_\+\=\`\~]", " ", puzzlename)
 		puzzlename = re.sub(r" +", "-", puzzlename)
 		puzzlename = puzzlename.strip()
-		puzzlename = "%s-%s" % (daystr, puzzlename)
+		choices = ["blank"]
+		for t in templates:
+			choices.append(t.name)
+		choicesstr = ""
+		for i in range(0, len(choices)):
+			choicesstr += choices[i]
+			if not i == len(choices) - 1:
+				choicesstr += ", "
+		print("Please select a template to use.")
+		print("The available choices are: " + choicesstr)
+		while True:
+			template = input(">>>")
+			if template in choices:
+				break
+			else:
+				print("Please enter a valid template name.")
+		puzzlename = "%s-%s-%s" % (daystr, puzzlename, template.upper())
 		print("The directory \"%s\" will be created." % puzzlename)
 		if getyesno("Is this correct?"):
 			break
-	
-	template = ""
-	choices = ["blank"]
-	for t in templates:
-		choices.append(t.name)
-	choicesstr = ""
-	for i in range(0, len(choices)):
-		choicesstr += choices[i]
-		if not i == len(choices) - 1:
-			choicesstr += ", "
-	print("Please select a template to use.")
-	print("The available choices are: " + choicesstr)
-	while True:
-		template = input(">>>")
-		if template in choices:
-			break
-		else:
-			print("Please enter a valid template name.")
 	
 	dst = path("puzzles/%s" % puzzlename)
 	if not template == "blank":
