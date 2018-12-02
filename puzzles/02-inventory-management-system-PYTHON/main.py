@@ -2,12 +2,8 @@
 
 def main():
 	
-	lines = []
 	with open("input.txt") as fp:
-		line = fp.readline().strip()
-		while line:
-			lines.append(line)
-			line = fp.readline().strip()
+		lines = fp.read().strip().split()
 	
 	double_count = 0
 	triple_count = 0
@@ -29,6 +25,7 @@ def check_for_count(string, num):
 		count = string.count(u)
 		if count == num:
 			return True
+	return False
 
 def find_match(lines):
 	for block_a in lines:
