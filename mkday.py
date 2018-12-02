@@ -166,9 +166,6 @@ def main():
 	else:
 		daystr = str(day)
 	
-	template = ""
-	
-	
 	# get puzzle name and format it
 	puzzlename = ""
 	template = ""
