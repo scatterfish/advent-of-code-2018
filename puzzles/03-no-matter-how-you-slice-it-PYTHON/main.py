@@ -5,10 +5,10 @@ import sys
 class Claim:
 	def __init__(self, claim_id, margin_left, width, margin_top, height):
 		self.claim_id = claim_id
-		self.margin_left = margin_left
-		self.width = width
-		self.margin_top = margin_top
-		self.height = height
+		self.width_lower = margin_left
+		self.width_upper = margin_left + width
+		self.height_lower = margin_top
+		self.height_upper = margin_top + height
 
 def main():
 	
@@ -33,8 +33,8 @@ def main():
 		claim_list.append(Claim(claim_id, margin[0], measure[0], margin[1], measure[1]))
 	
 	for claim in claim_list:
-		for i in range(claim.margin_left, claim.margin_left + claim.width):
-			for k in range(claim.margin_top, claim.margin_top + claim.height):
+		for i in range(claim.width_lower, claim.width_upper):
+			for k in range(claim.height_lower, claim.height_upper):
 				grid[i][k] += 1
 	
 	overlap_count = 0
@@ -47,8 +47,8 @@ def main():
 	
 	for claim in claim_list:
 		is_valid = True
-		for i in range(claim.margin_left, claim.margin_left + claim.width):
-			for k in range(claim.margin_top, claim.margin_top + claim.height):
+		for i in range(claim.width_lower, claim.width_upper):
+			for k in range(claim.height_lower, claim.height_upper):
 				if grid[i][k] > 1:
 					is_valid = False
 		if is_valid:
