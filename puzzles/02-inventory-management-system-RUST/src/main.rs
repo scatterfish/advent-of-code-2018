@@ -42,7 +42,7 @@ fn find_match(lines: Vec<&str>) -> String {
 	for line_a in &lines {
 		for line_b in &lines {
 			let shared = check_match(line_a, line_b);
-			if shared != ""{
+			if shared != "" {
 				return shared;
 			}
 		}
