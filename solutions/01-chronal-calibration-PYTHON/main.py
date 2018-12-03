@@ -10,15 +10,15 @@ def main():
 	known_frequencies = []
 	first_repeat = 0
 	
-	with open("input.txt") as fp:
-		line = fp.readline().strip()
+	with open("input.txt") as input_file:
+		line = input_file.readline().strip()
 		while line:
 			if line[0:1] == "+":
 				delta = int(line[1:])
 			else:
 				delta = -int(line[1:])
 			frequency_deltas.append(delta)
-			line = fp.readline().strip()
+			line = input_file.readline().strip()
 	
 	print("Calculating... Be patient, this may take a while...")
 	

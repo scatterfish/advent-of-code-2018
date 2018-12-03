@@ -10,8 +10,8 @@ class Claim:
 
 def main():
 	
-	with open("input.txt") as fp:
-		lines = fp.read().strip().split("\n")
+	with open("input.txt") as input_file:
+		lines = input_file.read().strip().split("\n")
 	
 	grid = []
 	for i in range(0, 1000):

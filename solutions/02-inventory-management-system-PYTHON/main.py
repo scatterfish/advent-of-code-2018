@@ -2,8 +2,8 @@
 
 def main():
 	
-	with open("input.txt") as fp:
-		lines = fp.read().strip().split()
+	with open("input.txt") as input_file:
+		lines = input_file.read().strip().split()
 	
 	double_count = 0
 	triple_count = 0
