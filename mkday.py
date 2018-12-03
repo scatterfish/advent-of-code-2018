@@ -11,11 +11,11 @@ import re
 import shutil
 from pathlib import Path as path
 
-def exitwitherror(message):
+def exit_with_error(message):
 	print("Error! %s\nExiting..." % message, file=sys.stderr)
 	sys.exit(1)
 
-def getyesno(prompt):
+def get_yes_no(prompt):
 	print(prompt)
 	while True:
 		response = input("(Y/N): ").lower()
@@ -26,7 +26,7 @@ def getyesno(prompt):
 		else:
 			print("Please enter a valid input (Y/N/Yes/No)")
 
-def getint(prompt):
+def get_int(prompt):
 	print(prompt)
 	while True:
 		try:
@@ -37,24 +37,24 @@ def getint(prompt):
 		except ValueError:
 			print("Please enter a valid integer.")
 		except:
-			exitwitherror("Failed to read integer input")
+			exit_with_error("Failed to read integer input")
 
-def checkdir(name):
-	dirpath = path(name)
-	if not dirpath.exists():
+def check_dir_exists(name):
+	dir_path = path(name)
+	if not dir_path.exists():
 		print("\"%s\" directory not found. Making a new one..." % name)
 		try:
-			dirpath.mkdir()
+			dir_path.mkdir()
 			return True # directory created
 		except:
-			exitwitherror("Failed to create directory \"%s\"" % name)
-	elif dirpath.is_file():
-		exitwitherror("Cannot create \"%s\" directory because it is a file" % name)
+			exit_with_error("Failed to create directory \"%s\"" % name)
+	elif dir_path.is_file():
+		exit_with_error("Cannot create \"%s\" directory because it is a file" % name)
 	return False # directory found
 
 
 
-def populatetemplates():
+def populate_templates():
 	print("Created new templates directory, please check howto.txt")
 	path("templates/howto.txt").write_text((
 		"This is the directory containing project templates for various languages.\n"
@@ -106,6 +106,10 @@ def populatetemplates():
 		"\n"
 		"[dependencies]\n"
 	))
+	path("templates/rust/.gitignore").write_text((
+		"target/\n"
+		"Cargo.lock\n"
+	))
 	path("templates/rust/src/main.rs").write_text((
 		"fn main() {\n"
 		"	println!(\"Hello, world!\");\n"
@@ -116,101 +120,101 @@ def populatetemplates():
 def main():
 	
 	# ensure that all of the directories exist
-	checkdir("puzzles")
-	if checkdir("templates"):
-		populatetemplates()
+	check_dir_exists("solutions")
+	if check_dir_exists("templates"):
+		populate_templates()
 	
-	# get the paths for the templates and existing puzzle projects
+	# get the paths for the templates and existing solution projects
 	templates = [t for t in path("templates").glob("*") if t.is_dir()]
-	puzzles = [e for e in path("puzzles").glob("*") if e.is_dir()]
+	solutions = [e for e in path("solutions").glob("*") if e.is_dir()]
 	
-	# get the day numbers for the existing puzzle projects
+	# get the day numbers for the existing solution projects
 	days = []
-	for e in puzzles:
+	for e in solutions:
 		try:
 			d = int(e.name[0:2])
 			days.append(d)
 		except:
-			exitwitherror("Failed to parse day number for \"%s\"" % e.name)
+			exit_with_error("Failed to parse day number for \"%s\"" % e.name)
 	
 	# determine the highest day number so far
-	maxday = 0
+	max_day = 0
 	for d in days:
 		if d <= 0:
-			exitwitherror("Got invalid day number for \"%s\"" % e.name)
-		if d > maxday:
-			maxday = d
-	day = maxday + 1
+			exit_with_error("Got invalid day number for \"%s\"" % e.name)
+		if d > max_day:
+			max_day = d
+	day = max_day + 1
 	
 	print((
 		"---------------------------------------------------\n"
-		"Welcome to the Advent of Code puzzle project maker!\n"
+		"Welcome to the Advent of Code solution project maker!\n"
 		"---------------------------------------------------"
 	))
 	
-	# get the day of the puzzle
-	daycorrect = getyesno("It seems that it's day %d. Is this correct?" % day)
-	if not daycorrect:
+	# get the day of the solution
+	day_correct = get_yes_no("It seems that it's day %d. Is this correct?" % day)
+	if not day_correct:
 		while True:
-			day = getint("Please enter the current day.")
+			day = get_int("Please enter the current day.")
 			if day in days:
-				if getyesno("There already exists a project for day %d. Are you sure?" % day):
-					break;
+				if get_yes_no("There already exists a project for day %d. Are you sure?" % day):
+					break
 			else:
-				break;
+				break
 	
 	# get string for the day number
-	daystr = ""
+	day_str = ""
 	if day < 10:
-		daystr = "0" + str(day)
+		day_str = "0" + str(day)
 	else:
-		daystr = str(day)
+		day_str = str(day)
 	
-	# get puzzle name and format it
-	puzzlename = ""
+	# get solution name and format it
+	solution_name = ""
 	template = ""
 	while True:
-		print("Please enter the puzzle name. (e.g. Inverse Captcha)")
-		puzzlename = input(">>>").lower()
-		puzzlename = re.sub(r"[\/\\\?\%\*\:\|\"\<\>\.\,\!\@\#\$\^\&\;\-\_\+\=\`\~]", " ", puzzlename)
-		puzzlename = re.sub(r" +", "-", puzzlename)
-		puzzlename = puzzlename.strip()
+		print("Please enter the solution name. (e.g. Inverse Captcha)")
+		solution_name = input(">>>").lower()
+		solution_name = re.sub(r"[\/\\\?\%\*\:\|\"\<\>\.\,\!\@\#\$\^\&\;\-\_\+\=\`\~]", " ", solution_name)
+		solution_name = re.sub(r" +", "-", solution_name)
+		solution_name = solution_name.strip()
 		choices = ["blank"]
 		for t in templates:
 			choices.append(t.name)
-		choicesstr = ""
+		choices_str = ""
 		for i in range(0, len(choices)):
-			choicesstr += choices[i]
+			choices_str += choices[i]
 			if not i == len(choices) - 1:
-				choicesstr += ", "
+				choices_str += ", "
 		print("Please select a template to use.")
-		print("The available choices are: " + choicesstr)
+		print("The available choices are: " + choices_str)
 		while True:
 			template = input(">>>")
 			if template in choices:
 				break
 			else:
 				print("Please enter a valid template name.")
-		puzzlename = "%s-%s-%s" % (daystr, puzzlename, template.upper())
-		print("The directory \"%s\" will be created." % puzzlename)
-		if getyesno("Is this correct?"):
+		solution_name = "%s-%s-%s" % (day_str, solution_name, template.upper())
+		print("The directory \"%s\" will be created." % solution_name)
+		if get_yes_no("Is this correct?"):
 			break
 	
-	dst = path("puzzles/%s" % puzzlename)
+	dst = path("solutions/%s" % solution_name)
 	if not template == "blank":
 		src = path("templates/%s" % template)
-		dst = path("puzzles/%s" % puzzlename)
+		dst = path("solutions/%s" % solution_name)
 		try:
 			shutil.copytree(src, dst)
 		except:
-			exitwitherror("Failed to copy \"%s\" template tree to \"%s\"" % (template, puzzlename))
-		print("Done! Created directory \"%s\" with the \"%s\" template." % (puzzlename, template))
+			exit_with_error("Failed to copy \"%s\" template tree to \"%s\"" % (template, solution_name))
+		print("Done! Created directory \"%s\" with the \"%s\" template." % (solution_name, template))
 	else:
 		try:
 			dst.mkdir()
 		except:
-			exitwitherror("Failed to create directory \"%s\"" % puzzlename)
-		print("Done! Created directory \"%s\"" % puzzlename)
+			exit_with_error("Failed to create directory \"%s\"" % solution_name)
+		print("Done! Created directory \"%s\"" % solution_name)
 
 if __name__ == "__main__":
 	try:
