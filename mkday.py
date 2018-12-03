@@ -26,12 +26,19 @@ def get_yes_no(prompt):
 		else:
 			print("Please enter a valid input (Y/N/Yes/No)")
 
-def get_int(prompt):
+def get_day(prompt):
 	print(prompt)
 	while True:
 		try:
-			response = int(input(">>>"))
-			return response
+			response = input(">>>")
+			if not response == "":
+				response = int(response)
+				if response > 0:
+					return response
+				else:
+					print("Please enter a valid day number.")
+			else:
+				return 0
 		except KeyboardInterrupt:
 			print("\nKeyboard interrupt received. Exiting...")
 		except ValueError:
@@ -51,8 +58,6 @@ def check_dir_exists(name):
 	elif dir_path.is_file():
 		exit_with_error("Cannot create \"%s\" directory because it is a file" % name)
 	return False # directory found
-
-
 
 def populate_templates():
 	print("Created new templates directory, please check howto.txt")
@@ -152,16 +157,10 @@ def main():
 		"---------------------------------------------------"
 	))
 	
-	# get the day of the solution
-	day_correct = get_yes_no("It seems that it's day %d. Is this correct?" % day)
-	if not day_correct:
-		while True:
-			day = get_int("Please enter the current day.")
-			if day in days:
-				if get_yes_no("There already exists a project for day %d. Are you sure?" % day):
-					break
-			else:
-				break
+	# get the day of the puzzle
+	day_to_use = get_day("Please enter the day for the puzzle. (Default: %d)" % day)
+	if not day_to_use == 0:
+		day = day_to_use
 	
 	# get string for the day number
 	day_str = ""
@@ -174,7 +173,7 @@ def main():
 	solution_name = ""
 	template = ""
 	while True:
-		print("Please enter the solution name. (e.g. Inverse Captcha)")
+		print("Please enter the puzzle name. (e.g. Inverse Captcha)")
 		solution_name = input(">>>").lower()
 		solution_name = re.sub(r"[\/\\\?\%\*\:\|\"\<\>\.\,\!\@\#\$\^\&\;\-\_\+\=\`\~]", " ", solution_name)
 		solution_name = re.sub(r" +", "-", solution_name)
