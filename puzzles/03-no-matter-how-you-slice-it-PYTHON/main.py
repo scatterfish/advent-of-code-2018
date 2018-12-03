@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import sys
-
 class Claim:
 	def __init__(self, claim_id, margin_left, width, margin_top, height):
 		self.claim_id = claim_id
@@ -53,7 +51,7 @@ def main():
 					is_valid = False
 		if is_valid:
 			print("Valid claim: %d" % claim.claim_id)
-			sys.exit(0)
+			break
 
 if __name__ == "__main__":
 	main()
