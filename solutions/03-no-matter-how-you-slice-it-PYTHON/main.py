@@ -21,14 +21,13 @@ def main():
 		grid.append(row)
 	
 	claim_list = []
-	for claim in lines:
-		pieces = claim.split()
-		claim_id = int(pieces[0].replace("#", ""))
-		margin_data = pieces[2].replace(":", "").split(",")
-		margin = [int(margin_data[0]), int(margin_data[1])]
-		measure_data = pieces[3].split("x")
-		measure = [int(measure_data[0]), int(measure_data[1])] 
-		claim_list.append(Claim(claim_id, margin[0], measure[0], margin[1], measure[1]))
+	for l in lines:
+		claim_id    = int(l[l.find("#") + 1:l.find("@")])
+		margin_left = int(l[l.find("@") + 1:l.find(",")])
+		margin_top  = int(l[l.find(",") + 1:l.find(":")])
+		width       = int(l[l.find(":") + 1:l.find("x")])
+		height      = int(l[l.find("x") + 1:])
+		claim_list.append(Claim(claim_id, margin_left, width, margin_top, height))
 	
 	for claim in claim_list:
 		for i in range(claim.width_lower, claim.width_upper):
