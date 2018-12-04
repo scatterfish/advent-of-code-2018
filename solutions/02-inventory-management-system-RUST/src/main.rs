@@ -2,7 +2,6 @@
 fn main() {
 	
 	let input = include_str!("input.txt");
-	
 	let input_lines: Vec<&str> = input.lines().collect();
 	
 	let mut double_count = 0;

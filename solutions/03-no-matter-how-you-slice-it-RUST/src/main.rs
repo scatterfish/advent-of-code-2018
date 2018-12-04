@@ -14,8 +14,6 @@ fn main() {
 	let input = include_str!("input.txt");
 	let input_lines: Vec<&str> = input.lines().collect();
 	
-	let mut grid = [[0; 1000]; 1000];
-	
 	let mut claim_list: Vec<Claim> = Vec::new();
 	
 	for l in &input_lines {
@@ -33,6 +31,8 @@ fn main() {
 		});
 	}
 	
+	let mut grid = [[0; 1000]; 1000];
+	
 	for claim in &claim_list {
 		for x in claim.width_lower..claim.width_upper {
 			for y in claim.height_lower..claim.height_upper {
@@ -47,6 +47,7 @@ fn main() {
 			if grid[x][y] > 1 { overlap_count += 1; }
 		}
 	}
+	
 	println!("Overlapping tiles: {}", overlap_count);
 	
 	for claim in claim_list {

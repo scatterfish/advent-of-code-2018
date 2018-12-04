@@ -69,6 +69,7 @@ def populate_templates():
 	))
 	path("templates/c").mkdir()
 	path("templates/c/out").mkdir()
+	path("templates/c/out/.keep").write_text("")
 	path("templates/c/input.txt").write_text("")
 	path("templates/c/main.c").write_text((
 		"#include <stdio.h>\n"

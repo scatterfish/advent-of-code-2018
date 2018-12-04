@@ -13,13 +13,6 @@ def main():
 	with open("input.txt") as input_file:
 		lines = input_file.read().strip().split("\n")
 	
-	grid = []
-	for i in range(0, 1000):
-		row = []
-		for k in range(0, 1000):
-			row.append(0)
-		grid.append(row)
-	
 	claim_list = []
 	for l in lines:
 		claim_id    = int(l[l.find("#") + 1:l.find("@")])
@@ -28,6 +21,13 @@ def main():
 		width       = int(l[l.find(":") + 1:l.find("x")])
 		height      = int(l[l.find("x") + 1:])
 		claim_list.append(Claim(claim_id, margin_left, width, margin_top, height))
+	
+	grid = []
+	for i in range(0, 1000):
+		row = []
+		for k in range(0, 1000):
+			row.append(0)
+		grid.append(row)
 	
 	for claim in claim_list:
 		for i in range(claim.width_lower, claim.width_upper):
