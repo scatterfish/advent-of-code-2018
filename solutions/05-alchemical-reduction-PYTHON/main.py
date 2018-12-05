@@ -26,7 +26,7 @@ def react_polymer_chain(chain):
 			next_unit = chain[i + 1]
 			if current_unit == next_unit:
 				continue
-			if current_unit.lower() == next_unit or current_unit.upper() == next_unit:
+			if current_unit.lower() == next_unit.lower():
 				if not i in units_to_remove:
 					units_to_remove.append(i)
 					units_to_remove.append(i + 1)
@@ -43,9 +43,7 @@ def get_min_length(chain):
 	for u in list("abcdefghijklmnopqrstuvwxyz"):
 		chain_shrink = [c for c in chain if c != u and c != u.upper()]
 		chain_shrink = react_polymer_chain(chain_shrink)
-		shrink_len = len(chain_shrink)
-		if shrink_len < min_length:
-			min_length = shrink_len
+		min_length = min(min_length, len(chain_shrink))
 	return min_length
 
 if __name__ == "__main__":
