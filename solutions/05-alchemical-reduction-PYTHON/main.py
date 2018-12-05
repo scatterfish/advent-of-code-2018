@@ -41,10 +41,9 @@ def react_polymer_chain(chain):
 def get_min_length(chain):
 	min_length = len(chain)
 	for u in list("abcdefghijklmnopqrstuvwxyz"):
-		chain_copy = list(chain)
-		chain_copy = [c for c in chain_copy if c != u and c != u.upper()]
-		chain_copy = react_polymer_chain(chain_copy)
-		shrink_len = len(chain_copy)
+		chain_shrink = [c for c in chain if c != u and c != u.upper()]
+		chain_shrink = react_polymer_chain(chain_shrink)
+		shrink_len = len(chain_shrink)
 		if shrink_len < min_length:
 			min_length = shrink_len
 	return min_length
