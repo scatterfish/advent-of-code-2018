@@ -92,7 +92,7 @@ def populate_templates():
 	path("templates/python/input.txt").write_text("")
 	p = path("templates/python/main.py")
 	p.write_text((
-		"#!/bin/python\n"
+		"#!/usr/bin/env python3\n"
 		"\n"
 		"def main():\n"
 		"	print(\"Hello, world!\")\n"

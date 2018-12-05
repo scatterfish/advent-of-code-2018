@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 class Claim:
 	def __init__(self, claim_id, margin_left, width, margin_top, height):
@@ -23,30 +23,30 @@ def main():
 		claim_list.append(Claim(claim_id, margin_left, width, margin_top, height))
 	
 	grid = []
-	for i in range(0, 1000):
+	for x in range(0, 1000):
 		row = []
-		for k in range(0, 1000):
+		for y in range(0, 1000):
 			row.append(0)
 		grid.append(row)
 	
 	for claim in claim_list:
-		for i in range(claim.width_lower, claim.width_upper):
-			for k in range(claim.height_lower, claim.height_upper):
-				grid[i][k] += 1
+		for x in range(claim.width_lower, claim.width_upper):
+			for y in range(claim.height_lower, claim.height_upper):
+				grid[x][y] += 1
 	
 	overlap_count = 0
-	for i in range(0, 1000):
-		for k in range(0, 1000):
-			if grid[i][k] > 1:
+	for x in range(0, 1000):
+		for y in range(0, 1000):
+			if grid[x][y] > 1:
 				overlap_count += 1
 	
 	print("Overlapping tiles: %d" % overlap_count)
 	
 	for claim in claim_list:
 		is_valid = True
-		for i in range(claim.width_lower, claim.width_upper):
-			for k in range(claim.height_lower, claim.height_upper):
-				if grid[i][k] > 1:
+		for x in range(claim.width_lower, claim.width_upper):
+			for y in range(claim.height_lower, claim.height_upper):
+				if grid[x][y] > 1:
 					is_valid = False
 		if is_valid:
 			print("Valid claim: %d" % claim.claim_id)
