@@ -25,7 +25,6 @@ def main():
 			for m in range(current_minute, next_minute):
 				guard_map[current_guard][m] += 1
 	
-	sleep_times = defaultdict(int)
 	sleepiest_guard = 0
 	for guard in list(guard_map):
 		if sum(guard_map[guard].values()) > sum(guard_map[sleepiest_guard].values()):
