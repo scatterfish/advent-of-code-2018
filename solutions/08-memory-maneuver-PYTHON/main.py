@@ -10,15 +10,14 @@ class Node:
 node_data = []
 
 def main():
-	global node_data
 	
 	with open("input.txt") as input_file:
-		node_data = [int(n) for n in reversed(input_file.read().strip().split())]
+		data = [int(n) for n in reversed(input_file.read().strip().split())]
+		node_data.extend(data)
 	
 	root = get_tree_from_data()
 	
 	print("Metadata sum: %d" % get_metadata_sum(root))
-	
 	print("Root value: %d" % get_node_value(root))
 	
 
