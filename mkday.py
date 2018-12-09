@@ -250,7 +250,10 @@ def main():
 		for i in input_files:
 			i.unlink()
 			try:
-				i.symlink_to(path(input_path).resolve())
+				#back_count = len(str(i).split("/")) - len(input_path.split("/"))
+				back_count = len(str(i).split("/")) - 3
+				symlink_path = ("../" * back_count) + "input.txt"
+				i.symlink_to(symlink_path)
 			except:
 				exit_with_error("Failed to create symlink from \"%s\" to \"%s\"!" % (input_path, i))
 		print("Done! Created directory \"%s\" with the \"%s\" template." % (solution_dir, template))
