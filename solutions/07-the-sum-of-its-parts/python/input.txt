@@ -1,0 +1,1 @@
+/home/scatterfish/Programming/advent-of-code/2018/solutions/07-the-sum-of-its-parts/input.txt

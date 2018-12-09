@@ -1,0 +1,1 @@
+/home/scatterfish/Programming/advent-of-code/2018/solutions/03-no-matter-how-you-slice-it/input.txt

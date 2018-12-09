@@ -1,0 +1,1 @@
+/home/scatterfish/Programming/advent-of-code/2018/solutions/05-alchemical-reduction/input.txt
