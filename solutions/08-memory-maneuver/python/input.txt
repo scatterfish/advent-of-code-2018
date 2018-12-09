@@ -1,1 +1,1 @@
-/home/scatterfish/Programming/advent-of-code/2018/solutions/08-memory-maneuver/input.txt
+../input.txt

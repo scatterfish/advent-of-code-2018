@@ -1,1 +1,1 @@
-/home/scatterfish/Programming/advent-of-code/2018/solutions/02-inventory-management-system/input.txt
+../input.txt

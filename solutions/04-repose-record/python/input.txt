@@ -1,1 +1,1 @@
-/home/scatterfish/Programming/advent-of-code/2018/solutions/04-repose-record/input.txt
+../input.txt

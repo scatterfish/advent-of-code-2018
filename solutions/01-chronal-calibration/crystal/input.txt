@@ -1,1 +1,1 @@
-/home/scatterfish/Programming/advent-of-code/2018/solutions/01-chronal-calibration/input.txt
+../input.txt
