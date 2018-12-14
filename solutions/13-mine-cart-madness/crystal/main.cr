@@ -1,8 +1,8 @@
 
 class Cart
+	property name      : Char
 	property x         : Int32
 	property y         : Int32
-	property name      : Char
 	property direction : Symbol
 	property last_turn : Symbol
 	def initialize(@name, @x, @y, @direction)
@@ -11,17 +11,17 @@ class Cart
 end
 
 LEFT_MAP = {
-	:up => :left,
+	:up    => :left,
 	:right => :up,
-	:down => :right,
-	:left => :down,
+	:down  => :right,
+	:left  => :down,
 }
 
 RIGHT_MAP = {
-	:up => :right,
+	:up    => :right,
 	:right => :down,
-	:down => :left,
-	:left => :up,
+	:down  => :left,
+	:left  => :up,
 }
 
 grid = File.read_lines("input.txt", chomp: true).map(&.chars)
