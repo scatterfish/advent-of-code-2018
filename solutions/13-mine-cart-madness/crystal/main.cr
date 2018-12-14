@@ -28,7 +28,7 @@ grid = File.read_lines("input.txt", chomp: true).map(&.chars)
 
 carts = Array(Cart).new
 
-names = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".chars.reverse
+names = ('A'..'Z').to_a.reverse
 grid.size.times do |y|
 	grid[y].size.times do |x|
 		case grid[y][x]
