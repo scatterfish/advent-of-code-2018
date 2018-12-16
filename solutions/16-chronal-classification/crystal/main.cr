@@ -3,7 +3,7 @@ def bit(val : Bool) # convert bool to 0 or 1 as u32
 	val ? 1_u32 : 0_u32
 end
 
-OPCODES = {
+OPERATIONS = {
 	:addr => ->(a : UInt32, b : UInt32, c : UInt32, reg : Array(UInt32)) { reg[c] = reg[a] + reg[b] },
 	:addi => ->(a : UInt32, b : UInt32, c : UInt32, reg : Array(UInt32)) { reg[c] = reg[a] + b      },
 	
@@ -28,7 +28,7 @@ OPCODES = {
 	:eqrr => ->(a : UInt32, b : UInt32, c : UInt32, reg : Array(UInt32)) { reg[c] = bit(reg[a] == reg[b]) },
 }
 
-Candidates = OPCODES.keys.each_with_object({} of Symbol => Set(UInt32)) do |opname, candidates|
+Candidates = OPERATIONS.keys.each_with_object({} of Symbol => Set(UInt32)) do |opname, candidates|
 	candidates[opname] = Set(UInt32).new
 end
 
@@ -41,27 +41,27 @@ ref.each_slice(4) do |block|
 	opcode, a, b, c = block[1].split.map(&.to_u32)
 	reg_after       = block[2][9..18].split(", ").map(&.to_u32)
 	
-	possibilites = [] of UInt32
-	OPCODES.each do |name, op|
+	possibilites_count = 0
+	OPERATIONS.each do |name, op|
 		test_reg = reg_before.clone
 		op.call(a, b, c, test_reg)
 		if test_reg == reg_after
 			Candidates[name] << opcode
-			possibilites << opcode
+			possibilites_count += 1
 		end
 	end
-	part_one_count += 1 if possibilites.size >= 3
+	part_one_count += 1 if possibilites_count >= 3
 	
 end
 
 puts "Part 1 answer: #{part_one_count}"
 
 OPCODE_MAP = Hash(UInt32, Proc(UInt32, UInt32, UInt32, Array(UInt32), UInt32)).new
-while OPCODE_MAP.size < OPCODES.size
+while OPCODE_MAP.size < OPERATIONS.size
 	Candidates.each do |opname, candidates|
 		if candidates.size == 1
 			opcode = Candidates[opname].first
-			OPCODE_MAP[opcode] = OPCODES[opname]
+			OPCODE_MAP[opcode] = OPERATIONS[opname]
 			Candidates.each do |_, c|
 				c.delete(opcode)
 			end
