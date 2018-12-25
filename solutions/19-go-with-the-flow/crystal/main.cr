@@ -30,7 +30,7 @@ OPERATIONS = {
 
 lines = File.read_lines("input.txt", chomp: true)
 
-ip_reg = lines.delete_at(0)[4..-1].to_u32
+ip_reg = lines.shift[4..-1].to_u32
 
 puts "Part 1 answer: #{run_program(lines, [0_u32] * 6, ip_reg)}"
 puts "Part 2 answer: #{run_program(lines, [1_u32] + [0_u32] * 5, ip_reg)}"
@@ -39,7 +39,7 @@ REG_HARDCODE = 1 # not sure how to (at least somewhat) elegantly generalize this
 
 def run_program(instructions, reg, ip_reg)
 	ip_val = 0_u32
-	while ip_val >= 0 && ip_val < instructions.size
+	while 0 <= ip_val < instructions.size
 		pieces = instructions[ip_val].split
 		opname = pieces[0]
 		a, b, c = pieces[1..-1].map(&.to_u32)
@@ -51,5 +51,4 @@ def run_program(instructions, reg, ip_reg)
 			                             .sum
 		end
 	end
-	return reg.first
 end
