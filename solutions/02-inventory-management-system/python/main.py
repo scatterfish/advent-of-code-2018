@@ -17,11 +17,7 @@ def main():
 	print("Shared letters: %s" % find_match(lines))
 
 def check_for_count(string, num):
-	unique_letters = []
-	for l in string:
-		if not l in unique_letters:
-			unique_letters.append(l)
-	for u in unique_letters:
+	for u in set(string):
 		count = string.count(u)
 		if count == num:
 			return True

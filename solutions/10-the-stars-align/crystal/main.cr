@@ -21,10 +21,8 @@ end
 min_size = 1000000
 time = 0
 1.step do |i|
-	x_pos_list = particles.map { |p| p.x_pos + (p.x_vel * i) }
-	y_pos_list = particles.map { |p| p.y_pos + (p.y_vel * i) }
-	x_min, x_max = x_pos_list.minmax
-	y_min, y_max = y_pos_list.minmax
+	x_min, x_max = particles.map { |p| p.x_pos + (p.x_vel * i) }.minmax
+	y_min, y_max = particles.map { |p| p.y_pos + (p.y_vel * i) }.minmax
 	size = (x_max - x_min) + (y_max - y_min)
 	if size < min_size
 		min_size = size

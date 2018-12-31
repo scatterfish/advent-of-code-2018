@@ -23,10 +23,8 @@ def main():
 	min_size = 1000000
 	time = 0
 	for i in range(0, 1000000):
-		x_pos_list = [p.x_pos + (p.x_vel * i) for p in particles]
-		y_pos_list = [p.y_pos + (p.y_vel * i) for p in particles]
-		x_min, x_max = minmax(x_pos_list)
-		y_min, y_max = minmax(y_pos_list)
+		x_min, x_max = minmax([p.x_pos + (p.x_vel * i) for p in particles])
+		y_min, y_max = minmax([p.y_pos + (p.y_vel * i) for p in particles])
 		size = (x_max - x_min) + (y_max - y_min)
 		if size < min_size:
 			min_size = size

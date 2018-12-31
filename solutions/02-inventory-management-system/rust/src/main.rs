@@ -1,4 +1,7 @@
 
+use std::collections::HashSet;
+use std::iter::FromIterator;
+
 fn main() {
 	
 	let input = include_str!("input.txt");
@@ -18,14 +21,8 @@ fn main() {
 
 fn check_for_count(string: &str, num: usize) -> bool {
 	
-	let letters: Vec<char> = string.chars().collect();
-	let mut unique_letters: Vec<char> = Vec::new();
+	let unique_letters: HashSet<char> = HashSet::from_iter(string.chars());
 	
-	for l in letters {
-		if !unique_letters.contains(&l) {
-			unique_letters.push(l);
-		}
-	}
 	for u in unique_letters {
 		let count = string.matches(u).count();
 		if count == num {

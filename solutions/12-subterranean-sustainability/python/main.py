@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-GEN_MAX = 200 # max generation to compute sum for, should be stablized ~200
+GEN_MAX = 200 # max generation to compute sum for, should be stabilized ~200
 MARGIN_SCALE = 5 # how much to increase the list margins each iteration
 
 def main():
@@ -62,7 +62,6 @@ def get_plant_sum(plants, margin):
 		if plants[i]:
 			plant_sum += i - margin
 	return plant_sum
-	
 
 if __name__ == "__main__":
 	main()

@@ -26,25 +26,16 @@ def main():
 				guard_map[current_guard][m] += 1
 	
 	sleepiest_guard = 0
+	most_consistent_guard = 0
 	for guard in list(guard_map):
 		if sum(guard_map[guard].values()) > sum(guard_map[sleepiest_guard].values()):
 			sleepiest_guard = guard
-	
-	print("Sleepiest guard: %d" % sleepiest_guard)
-	
-	most_slept_minute = get_most_slept_minute(guard_map[sleepiest_guard])
-	
-	print("Most slept minute: %d" % most_slept_minute)
-	print("Part 1 answer: %d" % (sleepiest_guard * most_slept_minute))
-	
-	most_consistent_guard = 0
-	for guard in list(guard_map):
 		if max(guard_map[guard].values()) > max(guard_map[most_consistent_guard].values()):
 			most_consistent_guard = guard
-	
-	print("Most consistent guard: %d" % most_consistent_guard)
+	most_slept_minute = get_most_slept_minute(guard_map[sleepiest_guard])
 	most_consistent_minute = get_most_slept_minute(guard_map[most_consistent_guard])
-	print("Most consistent minute: %d" % most_consistent_minute)
+	
+	print("Part 1 answer: %d" % (sleepiest_guard * most_slept_minute))
 	print("Part 2 answer: %d" % (most_consistent_guard * most_consistent_minute))
 	
 

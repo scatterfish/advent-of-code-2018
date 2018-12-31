@@ -60,12 +60,7 @@ def calculate_power_data(size):
 
 def get_power_level(x, y):
 	rack_id = (x + 1) + 10
-	power_level = rack_id * (y + 1)
-	power_level += serial_num
-	power_level *= rack_id
-	power_level = floor((power_level / 100) % 10)
-	power_level -= 5
-	return power_level
+	return floor(((((rack_id * (y + 1)) + serial_num) * rack_id) / 100) % 10) - 5
 
 if __name__ == "__main__":
 	main()

@@ -5,10 +5,8 @@ triple_count = 0
 lines = File.read_lines("input.txt", chomp: true)
 
 def check_for_count(string, num)
-	unique_letters = string.chars.to_set
-	unique_letters.each do |c|
-		count = string.count(c)
-		if count == num
+	string.chars.uniq.each do |c|
+		if string.count(c) == num
 			return true
 		end
 	end
@@ -16,12 +14,8 @@ def check_for_count(string, num)
 end
 
 lines.each do |line|
-	if check_for_count(line, 2)
-		double_count += 1
-	end
-	if check_for_count(line, 3)
-		triple_count += 1
-	end
+	double_count += 1 if check_for_count(line, 2)
+	triple_count += 1 if check_for_count(line, 3)
 end
 
 puts "Checksum: #{double_count * triple_count}"

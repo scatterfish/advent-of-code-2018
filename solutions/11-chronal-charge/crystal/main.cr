@@ -1,5 +1,5 @@
 
-SEARCH_SIZE = 300 # how many sizes to brute force, answers always seem to be < 20
+SEARCH_SIZE = 35 # how many sizes to brute force, answers always seem to be < 20
 
 serial_num = File.read("input.txt").strip.to_u32
 
@@ -43,9 +43,7 @@ size = 0
 max_power = 0
 (1..SEARCH_SIZE).each do |s|
 	x, y, p = results[s - 1]
-	if s == 3
-		puts "Part 1 answer: #{x},#{y}"
-	end
+	puts "Part 1 answer: #{x},#{y}" if s == 3
 	if p > max_power
 		max_power = p
 		x_2 = x
@@ -57,10 +55,5 @@ puts "Part 2 answer: #{x_2},#{y_2},#{size}"
 
 def get_power_level(x, y, serial)
 	rack_id = (x + 1) + 10
-	power_level = rack_id * (y + 1)
-	power_level += serial
-	power_level *= rack_id
-	power_level = ((power_level / 100) % 10).floor
-	power_level -= 5
-	power_level
+	(((((rack_id * (y + 1)) + serial) * rack_id) / 100) % 10).floor - 5
 end

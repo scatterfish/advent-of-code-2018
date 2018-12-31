@@ -8,15 +8,12 @@ current_guard = 0
 	current_line = lines[i]
 	if current_line.includes? "begins shift"
 		current_guard = get_guard(current_line)
-		if !guard_map[current_guard]?
-			guard_map[current_guard] = Array(UInt32).new(60, 0)
-		end
+		guard_map[current_guard] = Array(UInt32).new(60, 0) unless guard_map[current_guard]?
 	elsif current_line.includes? "wakes up"
 		next
 	else
-		next_line = lines[i + 1]
 		current_minute = get_minute(current_line)
-		next_minute = get_minute(next_line)
+		next_minute = get_minute(lines[i + 1])
 		(current_minute...next_minute).each do |m|
 			guard_map[current_guard][m] += 1
 		end
@@ -26,22 +23,13 @@ end
 sleepiest_guard = 0
 most_consistent_guard = 0
 guard_map.each do |guard, minutes|
-	if sleepiest_guard == 0 || minutes.sum > guard_map[sleepiest_guard].sum
-		sleepiest_guard = guard
-	end
-	if most_consistent_guard == 0 || minutes.max > guard_map[most_consistent_guard].max
-		most_consistent_guard = guard
-	end
+	sleepiest_guard = guard if sleepiest_guard == 0 || minutes.sum > guard_map[sleepiest_guard].sum
+	most_consistent_guard = guard if most_consistent_guard == 0 || minutes.max > guard_map[most_consistent_guard].max
 end
 most_slept_minute = guard_map[sleepiest_guard].each_with_index.max[1]
 most_consistent_minute = guard_map[most_consistent_guard].each_with_index.max[1]
 
-puts "Sleepiest guard: #{sleepiest_guard}"
-puts "Most slept minute: #{most_slept_minute}"
 puts "Part 1 answer: #{sleepiest_guard * most_slept_minute}"
-
-puts "Most consistent guard: #{most_consistent_guard}"
-puts "Most consistent minute: #{most_consistent_minute}"
 puts "Part 2 answer: #{most_consistent_guard * most_consistent_minute}"
 
 def get_minute(line)

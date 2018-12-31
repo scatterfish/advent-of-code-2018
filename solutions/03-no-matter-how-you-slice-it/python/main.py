@@ -22,23 +22,15 @@ def main():
 		height      = int(l[l.find("x") + 1:])
 		claim_list.append(Claim(claim_id, margin_left, width, margin_top, height))
 	
-	grid = []
-	for x in range(0, 1000):
-		row = []
-		for y in range(0, 1000):
-			row.append(0)
-		grid.append(row)
+	grid = [[0] * 1000 for row in range(1000)]
 	
+	overlap_count = 0
 	for claim in claim_list:
 		for x in range(claim.width_lower, claim.width_upper):
 			for y in range(claim.height_lower, claim.height_upper):
 				grid[x][y] += 1
-	
-	overlap_count = 0
-	for x in range(0, 1000):
-		for y in range(0, 1000):
-			if grid[x][y] > 1:
-				overlap_count += 1
+				if grid[x][y] == 2:
+					overlap_count += 1
 	
 	print("Overlapping tiles: %d" % overlap_count)
 	

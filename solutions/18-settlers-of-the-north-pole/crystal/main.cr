@@ -14,9 +14,7 @@ adjacent_tiles = Array(Char).new
 			adjacent_tiles.clear
 			((x > 0 ? -1 : 0)..(x < grid.size - 1 ? 1 : 0)).each do |adj_x|
 				((y > 0 ? -1 : 0)..(y < grid[x].size - 1 ? 1 : 0)).each do |adj_y|
-					if adj_x != 0 || adj_y != 0
-						adjacent_tiles << grid[x + adj_x][y + adj_y]
-					end
+					adjacent_tiles << grid[x + adj_x][y + adj_y] if adj_x != 0 || adj_y != 0
 				end
 			end
 			case grid[x][y]
@@ -25,9 +23,7 @@ adjacent_tiles = Array(Char).new
 			when '|'
 				grid_next[x][y] = '#' if adjacent_tiles.count('#') >= 3
 			when '#'
-				if adjacent_tiles.count('#') < 1 || adjacent_tiles.count('|') < 1
-					grid_next[x][y] = '.'
-				end
+				grid_next[x][y] = '.' if adjacent_tiles.count('#') < 1 || adjacent_tiles.count('|') < 1
 			end
 		end
 	end

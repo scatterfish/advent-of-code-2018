@@ -29,33 +29,19 @@ fn main() {
 	}
 	
 	let mut sleepiest_guard = 0;
-	for guard in guard_map.keys() {
-		if sleepiest_guard == 0 {
-			sleepiest_guard = *guard;
-		} else if sum_int_arr(guard_map[guard]) > sum_int_arr(guard_map[&sleepiest_guard]) {
-			sleepiest_guard = *guard;
-		}
-	}
-	
-	println!("Sleepiest guard: {}", sleepiest_guard);
-	
-	let most_slept_minute = get_most_slept_minute(guard_map[&sleepiest_guard]);
-	
-	println!("Most slept minute: {}", most_slept_minute);
-	println!("Part 1 answer: {}", sleepiest_guard * most_slept_minute);
-	
 	let mut most_consistent_guard = 0;
 	for guard in guard_map.keys() {
-		if most_consistent_guard == 0 {
-			most_consistent_guard = *guard;
-		} else if get_max_slept(guard_map[guard]) > get_max_slept(guard_map[&most_consistent_guard]) {
+		if sleepiest_guard == 0 || sum_int_arr(guard_map[guard]) > sum_int_arr(guard_map[&sleepiest_guard]) {
+			sleepiest_guard = *guard;
+		}
+		if most_consistent_guard == 0 || get_max_slept(guard_map[guard]) > get_max_slept(guard_map[&most_consistent_guard]) {
 			most_consistent_guard = *guard;
 		}
 	}
-	
-	println!("Most consistent guard: {}", most_consistent_guard);
+	let most_slept_minute = get_most_slept_minute(guard_map[&sleepiest_guard]);
 	let most_consistent_minute = get_most_slept_minute(guard_map[&most_consistent_guard]);
-	println!("Most consistent minute: {}", most_consistent_minute);
+	
+	println!("Part 1 answer: {}", sleepiest_guard * most_slept_minute);
 	println!("Part 2 answer: {}", most_consistent_guard * most_consistent_minute);
 	
 }

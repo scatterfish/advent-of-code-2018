@@ -33,18 +33,13 @@ fn main() {
 	
 	let mut grid = [[0; 1000]; 1000];
 	
+	let mut overlap_count = 0;
 	for claim in &claim_list {
 		for x in claim.width_lower..claim.width_upper {
 			for y in claim.height_lower..claim.height_upper {
 				grid[x][y] += 1;
+				if grid[x][y] == 2 { overlap_count += 1; }
 			}
-		}
-	}
-	
-	let mut overlap_count = 0;
-	for x in 0..1000 {
-		for y in 0..1000 {
-			if grid[x][y] > 1 { overlap_count += 1; }
 		}
 	}
 	
