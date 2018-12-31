@@ -6,9 +6,7 @@ lines = File.read_lines("input.txt", chomp: true)
 
 def check_for_count(string, num)
 	string.chars.uniq.each do |c|
-		if string.count(c) == num
-			return true
-		end
+		return true if string.count(c) == num
 	end
 	return false
 end
